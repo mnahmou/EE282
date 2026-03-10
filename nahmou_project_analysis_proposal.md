@@ -13,7 +13,7 @@ Generation of a pipeline which performs the above features is expected to be a f
 
 ## References
 
-Andrews, S. 2010. FastQC: A Quality Control Tool for High Throughput Sequence Data
+Andrews, S. 2010. FastQC: A Quality Control Tool for High Throughput Sequence Data. Babraham Bioinformatics, Babraham Institute, Cambridge, United Kingdom. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/.
 
 Satija R, Farrell JA, Gennert D, Schier AF, Regev A. 2015. Spatial reconstruction of single-cell gene expression data. Nat Biotechnol 33: 495–502.
 
