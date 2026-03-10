@@ -34,3 +34,27 @@ bioawk -c fastx \
 ` { tot=length($seq) + tot ; print length($seq) } END { print tot } ' \
 | sort -k1,1rn | gawk ' NR == 1 { tot = $1 } NR > 1 { cs=$1+cs; if (cs / tot >= 0.5) { print $1; exit } } 
 >out.txt
+
+less `which plotCDF2`
+
+faSplitByN \
+< dmel...... /dev/stdout 10 \
+| bioawk -c fastx ' { print length($seq) } ' \
+| sort k1,1rn | gawk ' BEGIN  { print "Length\tAssembly" } { print $1 "t\dmel_r6_scaff" } ' \
+| less
+ mkfifo, background it
+
+
+mkfifo scaff_fifo & 
+
+contig_fifo &
+
+faSplitByN \
+< dmel...... /dev/stdout 10 \
+| bioawk -c fastx ' { print length($seq) } ' \
+| sort k1,1rn | gawk ' BEGIN  { print "Length\tAssembly" } { print $1 "t\dmel_r6_scaff"	} ' \
+| less
+
+
+\tAssembly\n0    the zero starts the plot from zero
+
