@@ -1,4 +1,59 @@
-bioawk to get all seqs up to 100kb and over 100kb
+# Homework 4: pipelines, plotting, genome assembly
+```
+wget https://s3ftp.flybase.org/genomes/Drosophila_melanogaster/dmel_r6.66_FB2025_05/fasta/dmel-all-chromosome-r6.66.fasta.gz
+```
+
+# Calculate the following for all sequencess up to 100kb and over 100kb
+## 1. Total number of nucleotides <= 100kb is 6178042 and > 100kb is 137547960
+```
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'length($seq) <= 100000 { count += length($seq) } END { print count+0 }'
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'length($seq) > 100000 { count += length($seq) } END { print count+0 }'
+```
+## 2. Total number of N's <= 100kb is 662593 and > 100kb is 490385
+```
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'length($seq) <= 100000 { count += gsub(/[Nn]/, "", $seq) } END { print count+0 }' 
+< dmel-all-chromosome-r6.66.fasta.gz bioawk -c fastx 'length($seq) > 100000 { count += gsub(/[Nn]/, "", $seq) } END { print count+0 }'
+```
+## 3. Total number of sequences <= 100kb is 1863 and > 100kb is 7
+```
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'{ if (length($seq) <= 100000) count++ } END { print count+0 }'
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'{ if (length($seq) > 100000) count++ } END { print count+0 }'
+```
+
+# Plots of the following for all sequences </= 100kb and > 100kb
+## 1. Sequence length distribution
+```
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'{ if (length($seq) <= 100000)print $name "\t" length($seq)}' >  100kb_or_less.txt
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'{ if (length($seq) > 100000)print $name "\t" length($seq)}' >  100kb_or_more.txt
+```
+In R:
+
+
+## 2. Sequence GC% distribution
+## 3. Cumulative sequence size sorted from largest to smallest
+
+# Assemble a genome using Pacbio HiFi reads
+
+# Assembly assessment
+## 1. Calculate the N50 of the above assembly
+## 2. Compare assembly to the contig assembly and scaffold
+## 3. Calculate BUSCO scores of both assemblies and compare them
+
+# Extra Credit: assembly comparison to contig assembly 
 
 create a dataframe with long and short sequences
 color=length on a histogram
