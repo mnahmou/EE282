@@ -63,6 +63,9 @@ p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", col
 labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
+<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/dde679e4-2dac-4e27-a709-e676baec731a" />
+<img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/de1ed9ff-e3b8-4eb7-ab2f-d2d2cd11c5fd" />
+
 ## 2. Sequence GC% distribution
 ```
 # Create separate files for seq <= 100kb and >100kb
@@ -96,9 +99,13 @@ p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color =
 labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
+<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/05f3803e-1dc0-406e-9acd-443fb346a84a" />
+<img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/cf190195-4c3e-4a90-a29d-3a4778c0281b" />
+
 
 ## 3. Cumulative sequence size sorted from largest to smallest
 ```
+# For seq 100kb or less
 < dmel-all-chromosome-r6.66.fasta.gz \
 bioawk -c fastx \
 '{ if (length($seq) <= 100000) print length($seq) }' \
@@ -106,7 +113,10 @@ bioawk -c fastx \
 | gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_100kb_or_less"}' > dmel_100kb_or_less_lengths.txt \
 | plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes.png
 ```
+<img width="640" height="480" alt="cumulative_sizes" src="https://github.com/user-attachments/assets/ad28e841-b718-4dc5-8d0e-7c564eb51223" />
+
 ```
+#For seq over 100kb
 < dmel-all-chromosome-r6.66.fasta.gz \
 bioawk -c fastx \
 '{ if (length($seq) <= 100000) print length($seq) }' \
