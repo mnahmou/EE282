@@ -30,7 +30,7 @@ bioawk -c fastx \
 '{ if (length($seq) > 100000) count++ } END { print count+0 }'
 ```
 
-# Plots of the following for all sequences </= 100kb and > 100kb
+# Plots of the following for all sequences <= 100kb and > 100kb
 ## 1. Sequence length distribution
 ```
 # Create separate files for seq <= 100kb and >100kb
@@ -97,7 +97,14 @@ labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
 ## 3. Cumulative sequence size sorted from largest to smallest
-
+```
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'{ if (length($seq) <= 100000) print length($seq) }' \
+| sort -rn \
+| gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_100kb_or_less"}' > dmel_100kb_or_less_lengths.txt \
+| plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes.png
+```
 # Assemble a genome using Pacbio HiFi reads
 
 # Assembly assessment
