@@ -163,7 +163,10 @@ N50: 21715751
 ```
 ## 2. Compare assembly to the contig assembly and scaffold
 Reference contig N50: 21.5 Mbp
-Assembly contig N50: 21.7 Mbp (good!!)
+
+Assembly contig N50: 21.7 Mbp 
+
+(good!!)
 ## 3. Calculate BUSCO scores of both assemblies and compare them
 For Shukla assembly: 
 ```
