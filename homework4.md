@@ -106,24 +106,24 @@ ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ## 3. Cumulative sequence size sorted from largest to smallest
 ```
 # For seq 100kb or less
-< dmel-all-chromosome-r6.66.fasta.gz \
-bioawk -c fastx \
+gunzip dmel-all-chromosome-r6.66.fasta.gz \
+| bioawk -c fastx \
 '{ if (length($seq) <= 100000) print length($seq) }' \
 | sort -rn \
 | gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_100kb_or_less"}' > dmel_100kb_or_less_lengths.txt \
-| plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes.png
+| plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes_100kb_or_less.png
 ```
-<img width="640" height="480" alt="cumulative_sizes" src="https://github.com/user-attachments/assets/ad28e841-b718-4dc5-8d0e-7c564eb51223" />
-
+<img width="640" height="480" alt="cumulative_sizes_100kb_or_less" src="https://github.com/user-attachments/assets/2198553f-04af-41b5-9df1-1c19bc70902d" />
 ```
 #For seq over 100kb
-< dmel-all-chromosome-r6.66.fasta.gz \
-bioawk -c fastx \
-'{ if (length($seq) <= 100000) print length($seq) }' \
+cat dmel-all-chromosome-r6.66.fasta \
+| bioawk -c fastx \
+'{ if (length($seq) > 100000) print length($seq) }' \
 | sort -rn \
-| gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_100kb_or_less"}' > dmel_100kb_or_less_lengths.txt \
-| plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes.png
+| gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_over_100kb"}' > dmel_over_100kb_lengths.txt \
+| plotCDF2 dmel_over_100kb_lengths.txt cumulative_sizes_over_100kb.png
 ```
+<img width="640" height="480" alt="cumulative_sizes_over_100kb" src="https://github.com/user-attachments/assets/d91a0ad2-6344-4e8a-a611-051b24203745" />
 
 # Assemble a genome using Pacbio HiFi reads
 ```
