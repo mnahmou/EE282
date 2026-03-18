@@ -54,8 +54,8 @@ p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", col
 labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
+<img width="2400" height="1800" alt="dmel_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/2fa290bb-3710-408e-8793-58873b87f664" />
 
-<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/dde679e4-2dac-4e27-a709-e676baec731a" />
 
 ```
 #For seq over 100kb:
@@ -67,8 +67,7 @@ p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", col
 labs(title = "Sequence Lengths (over 100kb)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
-
-<img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/de1ed9ff-e3b8-4eb7-ab2f-d2d2cd11c5fd" />
+<img width="2400" height="1800" alt="dmel_over_100kb_histogram" src="https://github.com/user-attachments/assets/2e68dc15-2027-488b-a560-b2107d97e467" />
 
 ## 2. Sequence GC% distribution
 ```
@@ -92,8 +91,8 @@ p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color =
 labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
+<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/41b125bf-d6a3-4d18-b1dd-393882b5015a" />
 
-<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/05f3803e-1dc0-406e-9acd-443fb346a84a" />
 
 ```
 #For seq over 100kb:
@@ -107,8 +106,7 @@ p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color =
 labs(title = "GC Distribution (over 100kb)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
-
-<img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/cf190195-4c3e-4a90-a29d-3a4778c0281b" />
+<img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/ace4ef7a-455c-42c0-b242-283d80fec0f2" />
 
 
 ## 3. Cumulative sequence size sorted from largest to smallest
