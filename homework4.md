@@ -33,16 +33,36 @@ bioawk -c fastx \
 # Plots of the following for all sequences </= 100kb and > 100kb
 ## 1. Sequence length distribution
 ```
+# Create separate files for seq <= 100kb and >100kb
 < dmel-all-chromosome-r6.66.fasta.gz \
 bioawk -c fastx \
-'{ if (length($seq) <= 100000)print $name "\t" length($seq)}' >  100kb_or_less.txt
+'{ if (length($seq) <= 100000)print $name "\t" length($seq)}' >  dmel_100kb_or_less.txt
 < dmel-all-chromosome-r6.66.fasta.gz \
 bioawk -c fastx \
-'{ if (length($seq) > 100000)print $name "\t" length($seq)}' >  100kb_or_more.txt
+'{ if (length($seq) > 100000)print $name "\t" length($seq)}' >  dmel_over_100kb.txt
 ```
-In R:
+```
+#Moved files to desktop, continue in R:
+#For seq 100kb or less:
+library(ggplot2)
+#Define files
+input_file <- "~/Desktop/dmel_100kb_or_less.txt"
+output_file <- "~/Desktop/dmel_100kb_or_less_histogram.png"
+#Define histogram
+data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length"))
+p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
+labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
+ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 
-
+#For seq over 100kb:
+input_file <- "~/Desktop/dmel_over_100kb.txt"
+output_file <- "~/Desktop/dmel_over_100kb_histogram.png"
+#Define histogram
+data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length"))
+p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
+labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
+ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
+```
 ## 2. Sequence GC% distribution
 ## 3. Cumulative sequence size sorted from largest to smallest
 
