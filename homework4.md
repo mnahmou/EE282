@@ -3,7 +3,7 @@
 wget https://s3ftp.flybase.org/genomes/Drosophila_melanogaster/dmel_r6.66_FB2025_05/fasta/dmel-all-chromosome-r6.66.fasta.gz
 ```
 
-# Calculate the following for all sequencess up to 100kb and over 100kb
+# Part ONE: Calculate the following for all sequencess up to 100kb and over 100kb
 ## 1. Total number of nucleotides <= 100kb is 6178042 and > 100kb is 137547960
 ```
 < dmel-all-chromosome-r6.66.fasta.gz \
@@ -30,7 +30,7 @@ bioawk -c fastx \
 '{ if (length($seq) > 100000) count++ } END { print count+0 }'
 ```
 
-# Plots of the following for all sequences <= 100kb and > 100kb
+# Part TWO: Plots of the following for all sequences <= 100kb and > 100kb
 ## 1. Sequence length distribution
 ```
 # Create separate files for seq <= 100kb and >100kb
@@ -125,7 +125,7 @@ cat dmel-all-chromosome-r6.66.fasta \
 ```
 <img width="640" height="480" alt="cumulative_sizes_over_100kb" src="https://github.com/user-attachments/assets/d91a0ad2-6344-4e8a-a611-051b24203745" />
 
-# Assemble a genome using Pacbio HiFi reads
+# Part THREEa: Assemble a genome using Pacbio HiFi reads
 ```
 cd ~/hw4/fasta
 wget https://hpc.oit.uci.edu/~solarese/ee282/iso1_onp_a2_1kb.fastq.gz
@@ -150,7 +150,7 @@ hifiasm \
 -t 16 \
 ISO_HiFi_Shukla2025.fasta.gz
 ```
-# Assembly assessment
+# Part THREEb: Assembly assessment
 ## 1. Calculate the N50 of the above assembly (~21Mbp)
 ```
 awk '/^S/{print ">"$2"\n"$3}' hifi_fly_assembly.bp.p_ctg.gfa > hifi_fly_assembly.fasta
