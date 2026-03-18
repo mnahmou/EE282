@@ -96,6 +96,7 @@ p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color =
 labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
+
 ## 3. Cumulative sequence size sorted from largest to smallest
 ```
 < dmel-all-chromosome-r6.66.fasta.gz \
@@ -105,9 +106,23 @@ bioawk -c fastx \
 | gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_100kb_or_less"}' > dmel_100kb_or_less_lengths.txt \
 | plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes.png
 ```
+```
+< dmel-all-chromosome-r6.66.fasta.gz \
+bioawk -c fastx \
+'{ if (length($seq) <= 100000) print length($seq) }' \
+| sort -rn \
+| gawk 'BEGIN {print "Length\tAssembly"} {print $1 "\tDmel_100kb_or_less"}' > dmel_100kb_or_less_lengths.txt \
+| plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes.png
+```
+
 # Assemble a genome using Pacbio HiFi reads
 
 # Assembly assessment
+```
+# Get assembly
+cd ~/hw4/fasta
+wget https://hpc.oit.uci.edu/~solarese/ee282/iso1_onp_a2_1kb.fastq.gz
+
 ## 1. Calculate the N50 of the above assembly
 ## 2. Compare assembly to the contig assembly and scaffold
 ## 3. Calculate BUSCO scores of both assemblies and compare them
