@@ -53,7 +53,11 @@ data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name",
 p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
 labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
+```
 
+<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/dde679e4-2dac-4e27-a709-e676baec731a" />
+
+```
 #For seq over 100kb:
 input_file <- "~/Desktop/dmel_over_100kb.txt"
 output_file <- "~/Desktop/dmel_over_100kb_histogram.png"
@@ -63,7 +67,7 @@ p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", col
 labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
-<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/dde679e4-2dac-4e27-a709-e676baec731a" />
+
 <img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/de1ed9ff-e3b8-4eb7-ab2f-d2d2cd11c5fd" />
 
 ## 2. Sequence GC% distribution
@@ -87,7 +91,11 @@ data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name",
 p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
 labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
+```
 
+<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/05f3803e-1dc0-406e-9acd-443fb346a84a" />
+
+```
 #For seq over 100kb:
 library(ggplot2)
 #Define files
@@ -99,7 +107,7 @@ p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color =
 labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
-<img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/05f3803e-1dc0-406e-9acd-443fb346a84a" />
+
 <img width="2400" height="1800" alt="dmel_gc_over_100kb_histogram" src="https://github.com/user-attachments/assets/cf190195-4c3e-4a90-a29d-3a4778c0281b" />
 
 
@@ -127,13 +135,11 @@ cat dmel-all-chromosome-r6.66.fasta \
 
 # Part THREEa: Assemble a genome using Pacbio HiFi reads
 ```
-cd ~/hw4/fasta
 wget https://hpc.oit.uci.edu/~solarese/ee282/iso1_onp_a2_1kb.fastq.gz
 
 #!/usr/bin/env bash
 #SBATCH --job-name=hifiasm
 #SBATCH --partition=standard
-
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
 #SBATCH --time=24:00:00
@@ -166,7 +172,6 @@ For Shukla assembly:
 #!/usr/bin/env bash
 #SBATCH --job-name=busco
 #SBATCH --partition=standard
-
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
 #SBATCH --time=24:00:00
@@ -195,7 +200,6 @@ For GenBank reference:
 #!/usr/bin/env bash
 #SBATCH --job-name=busco
 #SBATCH --partition=standard
-
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
 #SBATCH --time=24:00:00
@@ -218,9 +222,9 @@ busco -i GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz -o busco_ref_fly_
 	0	Fragmented BUSCOs (F)			   
 	2	Missing BUSCOs (M)			   
 	3285	Total BUSC<img width="5000" height="5000" alt="map_dmel-all-chromosome-r6 67_to_hifi_fly_assembly" src="https://github.com/user-attachments/assets/54ce55de-d789-4f7a-84cf-a30b16120258" />
-O groups searched	
 
 The Shukla assembly is pretty darn good!
+
 # Extra Credit: assembly comparison to contig assembly 
 Uploaded target sequence: dmel-all-chromosome-r6.67.fasta
 and Query sequence: hifi_fly_assembly.fasta
