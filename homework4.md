@@ -93,7 +93,6 @@ ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
 <img width="2400" height="1800" alt="dmel_gc_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/41b125bf-d6a3-4d18-b1dd-393882b5015a" />
 
-
 ```
 #For seq over 100kb:
 library(ggplot2)
@@ -120,6 +119,7 @@ gunzip dmel-all-chromosome-r6.66.fasta.gz \
 | plotCDF2 dmel_100kb_or_less_lengths.txt cumulative_sizes_100kb_or_less.png
 ```
 <img width="640" height="480" alt="cumulative_sizes_100kb_or_less" src="https://github.com/user-attachments/assets/2198553f-04af-41b5-9df1-1c19bc70902d" />
+
 ```
 #For seq over 100kb
 cat dmel-all-chromosome-r6.66.fasta \
