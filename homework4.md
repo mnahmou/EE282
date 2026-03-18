@@ -64,7 +64,7 @@ output_file <- "~/Desktop/dmel_over_100kb_histogram.png"
 #Define histogram
 data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length"))
 p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
-labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
+labs(title = "Sequence Lengths (over 100kb)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
 
@@ -104,7 +104,7 @@ output_file <- "~/Desktop/dmel_gc_over_100kb_histogram.png"
 #Define histogram
 data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length", "GC"))
 p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
-labs(title = "GC Distribution (100kb or less)", x = "GC content", y = "Frequency")
+labs(title = "GC Distribution (over 100kb)", x = "GC content", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
 
