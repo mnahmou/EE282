@@ -116,18 +116,106 @@ bioawk -c fastx \
 ```
 
 # Assemble a genome using Pacbio HiFi reads
-
-# Assembly assessment
 ```
-# Get assembly
 cd ~/hw4/fasta
 wget https://hpc.oit.uci.edu/~solarese/ee282/iso1_onp_a2_1kb.fastq.gz
 
-## 1. Calculate the N50 of the above assembly
-## 2. Compare assembly to the contig assembly and scaffold
-## 3. Calculate BUSCO scores of both assemblies and compare them
+#!/usr/bin/env bash
+#SBATCH --job-name=hifiasm
+#SBATCH --partition=standard
 
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+#SBATCH --output=hifiasm_%j.out
+#SBATCH --error=hifiasm_%j.err
+
+# Initialize mamba
+source /data/homezvol1/mnahmou/miniforge3/etc/profile.d/conda.sh
+# Activate your environment
+conda activate ee282
+# Run hifiasm
+hifiasm \
+-o hifi_fly_assembly \
+-t 16 \
+ISO_HiFi_Shukla2025.fasta.gz
+```
+# Assembly assessment
+## 1. Calculate the N50 of the above assembly (~21Mbp)
+```
+awk '/^S/{print ">"$2"\n"$3}' hifi_fly_assembly.bp.p_ctg.gfa > hifi_fly_assembly.fasta
+bioawk -c fastx '{print length($seq)}' hifi_fly_assembly.fasta | sort -rn | awk '{a[NR]=$1; s+=$1} END {for(i=1;i<=NR;i++){c+=a[i]; if(c>=s/2){print "N50: " a[i]; exit}}}'
+N50: 21715751
+```
+## 2. Compare assembly to the contig assembly and scaffold
+Reference contig N50: 21.5 Mbp
+Assembly contig N50: 21.7 Mbp (good!!)
+## 3. Calculate BUSCO scores of both assemblies and compare them
+For Shukla assembly: 
+```
+#!/usr/bin/env bash
+#SBATCH --job-name=busco
+#SBATCH --partition=standard
+
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+#SBATCH --output=busco_%j.out
+#SBATCH --error=busco_%j.err
+
+# Initialize mamba
+source /data/homezvol1/mnahmou/miniforge3/etc/profile.d/conda.sh
+# Activate your environment
+conda activate ee282
+# Run busco on fly genome
+busco -i hifi_fly_assembly.fasta -o busco_fly_eval -m genome -l diptera_odb10 -c 16
+```
+***** Results: *****
+
+	C:99.8%[S:99.6%,D:0.2%],F:0.0%,M:0.2%,n:3285,E:10.7%	   
+	3280	Complete BUSCOs (C)	(of which 351 contain internal stop codons)		   
+	3273	Complete and single-copy BUSCOs (S)	   
+	7	Complete and duplicated BUSCOs (D)	   
+	0	Fragmented BUSCOs (F)			   
+	5	Missing BUSCOs (M)			   
+	3285	Total BUSCO groups searched	
+
+For GenBank reference:
+```
+#!/usr/bin/env bash
+#SBATCH --job-name=busco
+#SBATCH --partition=standard
+
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+#SBATCH --output=busco_%j.out
+#SBATCH --error=busco_%j.err
+
+# Initialize mamba
+source /data/homezvol1/mnahmou/miniforge3/etc/profile.d/conda.sh
+# Activate your environment
+conda activate ee282
+# Run busco on fly genome
+busco -i GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz -o busco_ref_fly_eval -m genome -l diptera_odb10 -c 16
+```
+***** Results: *****
+
+	C:99.9%[S:99.7%,D:0.3%],F:0.0%,M:0.1%,n:3285,E:10.7%	   
+	3283	Complete BUSCOs (C)	(of which 351 contain internal stop codons)		   
+	3274	Complete and single-copy BUSCOs (S)	   
+	9	Complete and duplicated BUSCOs (D)	   
+	0	Fragmented BUSCOs (F)			   
+	2	Missing BUSCOs (M)			   
+	3285	Total BUSCO groups searched	
+
+ The Shukla assembly is pretty darn good!
 # Extra Credit: assembly comparison to contig assembly 
+Uploaded target sequence: dmel-all-chromosome-r6.67.fasta
+and Query sequence: hifi_fly_assembly.fasta
+to the web browser page at: https://dgenies.toulouse.inra.fr/result/eHfe8_20260318205519
+![dotplot] map_dmel-all-chromosome-r6.67_to_hifi_fly_assembly.png
+
 
 create a dataframe with long and short sequences
 color=length on a histogram
