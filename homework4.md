@@ -215,4 +215,4 @@ The Shukla assembly is pretty darn good!
 Uploaded target sequence: dmel-all-chromosome-r6.67.fasta
 and Query sequence: hifi_fly_assembly.fasta
 to the web browser page at: https://dgenies.toulouse.inra.fr/result/eHfe8_20260318205519
-![Uploading map_dmel-all-chromosome-r6.67_to_hifi_fly_assembly.png…]()
+<img width="5000" height="5000" alt="map_dmel-all-chromosome-r6 67_to_hifi_fly_assembly" src="https://github.com/user-attachments/assets/72362171-578f-4c44-a6bc-ebe415f03a38" />
