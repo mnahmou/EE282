@@ -9,6 +9,7 @@ wget https://s3ftp.flybase.org/genomes/Drosophila_melanogaster/dmel_r6.66_FB2025
 < dmel-all-chromosome-r6.66.fasta.gz \
 bioawk -c fastx \
 'length($seq) <= 100000 { count += length($seq) } END { print count+0 }'
+
 < dmel-all-chromosome-r6.66.fasta.gz \
 bioawk -c fastx \
 'length($seq) > 100000 { count += length($seq) } END { print count+0 }'
@@ -50,8 +51,7 @@ input_file <- "~/Desktop/dmel_100kb_or_less.txt"
 output_file <- "~/Desktop/dmel_100kb_or_less_histogram.png"
 #Define histogram
 data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length"))
-p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
-labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
+p <- ggplot(data, aes(x = Length)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() + labs(title = "Sequence Lengths (100kb or less)", x = "Sequence Length (bp)", y = "Frequency")
 ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
 <img width="2400" height="1800" alt="dmel_100kb_or_less_histogram" src="https://github.com/user-attachments/assets/2fa290bb-3710-408e-8793-58873b87f664" />
@@ -83,8 +83,10 @@ bioawk -c fastx \
 #For seq 100kb or less:
 library(ggplot2)
 #Define files
+
 input_file <- "~/Desktop/dmel_gc_100kb_or_less.txt"
 output_file <- "~/Desktop/dmel_gc_100kb_or_less_histogram.png"
+
 #Define histogram
 data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length", "GC"))
 p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
@@ -96,9 +98,11 @@ ggsave(output_file, plot = p, width = 8, height = 6, dpi = 300)
 ```
 #For seq over 100kb:
 library(ggplot2)
+
 #Define files
 input_file <- "~/Desktop/dmel_gc_over_100kb.txt"
 output_file <- "~/Desktop/dmel_gc_over_100kb_histogram.png"
+
 #Define histogram
 data <- read.table(input_file, sep = "\t", header = FALSE, col.names = c("Name", "Length", "GC"))
 p <- ggplot(data, aes(x = GC)) + geom_histogram(fill = "mediumseagreen", color = "black", bins = 50) + theme_minimal() +
@@ -144,10 +148,9 @@ wget https://hpc.oit.uci.edu/~solarese/ee282/iso1_onp_a2_1kb.fastq.gz
 #SBATCH --output=hifiasm_%j.out
 #SBATCH --error=hifiasm_%j.err
 
-# Initialize mamba
 source /data/homezvol1/mnahmou/miniforge3/etc/profile.d/conda.sh
-# Activate your environment
 conda activate ee282
+
 # Run hifiasm
 hifiasm \
 -o hifi_fly_assembly \
@@ -176,10 +179,9 @@ For Shukla assembly:
 #SBATCH --output=busco_%j.out
 #SBATCH --error=busco_%j.err
 
-# Initialize mamba
 source /data/homezvol1/mnahmou/miniforge3/etc/profile.d/conda.sh
-# Activate your environment
 conda activate ee282
+
 # Run busco on fly genome
 busco -i hifi_fly_assembly.fasta -o busco_fly_eval -m genome -l diptera_odb10 -c 16
 ```
@@ -204,10 +206,9 @@ For GenBank reference:
 #SBATCH --output=busco_%j.out
 #SBATCH --error=busco_%j.err
 
-# Initialize mamba
 source /data/homezvol1/mnahmou/miniforge3/etc/profile.d/conda.sh
-# Activate your environment
 conda activate ee282
+
 # Run busco on fly genome
 busco -i GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz -o busco_ref_fly_eval -m genome -l diptera_odb10 -c 16
 ```
