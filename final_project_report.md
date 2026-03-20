@@ -1,4 +1,4 @@
-# EE282 Transcriptomic Analysis of Noirmal and Glaucomatous Human Optic Nerve Head tissue
+# EE282 Transcriptomic Analysis of Normal and Glaucomatous Human Optic Nerve Head tissue
 Glaucoma is the leading cause of irreversible blindness worldwide, and is characterized by progressive vision loss due to pressure-mediated damage to retinal ganglion cell axons, which all pass through the optic nerve head before innervating visual targets in the brain.
 Both neuronal and glial cell populations in this region display profound, often heterogeneous changes in several models of glaucoma.
 Therefore, the optic nerve head is an important region of cellular and molecular changes, although the transcriptomic changes in human glaucoma have never been identified at the single cell level.
@@ -14,7 +14,7 @@ Astrocytes were further analyzed for DEGs and analyzed for pathway changes using
 
 ## CellRanger
 CellRanger is the default software package, provided by 10X Genomics, for analyzing 10X single cell data.
-What is it doing?
+It performs demultiplexing, read alignment, barcode and unique molecular identifier (UMI) processing, feature counting, and generation of a feature barcode matric to be fed into Seurat.
 
 cellranger.sh script:
 
@@ -47,6 +47,13 @@ do
                      --localcores=4 \
                      --localmem=100
 ```
+### Plot QC metrics
+VlnPlot(seu_merged, 
+        features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), 
+        group.by = "Group", 
+        pt.size = 0, 
+        ncol = 3)
+
 
 ## Create Seurat object
 seurat.sh
@@ -172,7 +179,7 @@ seu_merged <- RunHarmony(seu_merged,
                          assay.use = "RNA", 
                          reduction.save = "harmony")
 
-#Cluster and UMAP
+#Create harmonized Seurat object
 seu_merged <- FindNeighbors(seu_merged, reduction = "harmony", dims = 1:30)
 seu_merged <- FindClusters(seu_merged, resolution = 0.4)
 saveRDS(seu_merged, "ONH_integrated_harmony.rds")
@@ -227,9 +234,12 @@ seu_merged <- RenameIdents(seu_merged,
                            "23" = "Retinal Ganglion Cells",
                            "24" = "RPE",
                            "25" = "Amacrine Cells")
-DimPlot(seu_merged, reduction = "umap", label = TRUE, repel = TRUE, label.size = 3.5) +
+DimPlot(seu_merged, reduction = "umap", label = TRUE, repel = TRUE, label.size = 4) +
   ggtitle("Annotated ONH Cell Types")
 ```
+<img width="2000" height="750" alt="top10_dotplot" src="https://github.com/user-attachments/assets/62afc2eb-1b35-4784-91e4-3f45c8ead109" />
+<img width="1025" height="613" alt="Rplot" src="https://github.com/user-attachments/assets/b382a66b-add7-4767-8204-1c1741a1aec6" />
+
 
 ## DEGs in astrocytes
 ```
@@ -283,6 +293,7 @@ go_results_up <- enrichGO(gene          = sig_up_genes,
 dotplot(go_results_up, showCategory = 10) + 
   ggtitle("Upregulated Pathways: Glaucoma vs Normal Astrocytes")
 ```
+<img width="765" height="452" alt="astrocyte_upegulated" src="https://github.com/user-attachments/assets/12f5494f-464c-4c90-b572-1f072eef1b3a" />
 
 ## Pathway analysis on astrocytes for DOWNregulated genes
 ```
@@ -308,6 +319,7 @@ go_results_down <- enrichGO(gene          = sig_down_genes,
 dotplot(go_results_down, showCategory = 10) + 
   ggtitle("Downregulated Pathways: Glaucoma vs Normal Astrocytes")
 ```
+<img width="751" height="613" alt="astrocyte_downregulated" src="https://github.com/user-attachments/assets/2e907696-fa29-4372-a71a-9a84eb00b04a" />
 
 ## Pathway analysis on reactive astrocytes for UPregulated genes
 ```
@@ -332,6 +344,7 @@ go_reactive_up <- enrichGO(gene          = sig_up_reactive,
 dotplot(sig_up_reactive, showCategory = 10) + 
   ggtitle("Upregulated Pathways: Glaucoma vs Normal Reactive Astrocytes")
 ```
+<img width="751" height="613" alt="reactive_astrocytes_upregulated" src="https://github.com/user-attachments/assets/de40b416-2f0a-488c-bb8a-3681ff146f55" />
 
 ## Pathway analysis on reactive astrocytes for DOWNregulated genes
 ```
@@ -356,6 +369,7 @@ go_reactive_down <- enrichGO(gene          = sig_down_reactive,
 dotplot(sig_down_reactive, showCategory = 10) + 
   ggtitle("Downregulated Pathways: Glaucoma vs Normal Reactive Astrocytes")
 ```
+<img width="751" height="613" alt="reactive_astrocytes_downregulated" src="https://github.com/user-attachments/assets/e79bc019-b25b-40a7-90c4-698e598d52d2" />
 
 
 
