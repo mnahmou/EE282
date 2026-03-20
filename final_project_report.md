@@ -5,12 +5,12 @@ Therefore, the optic nerve head is an important region of cellular and molecular
 Here, we performed single cell transcriptomics on optic nerve head tissues from normal and glaucomatous donor eyes.
 
 ## Methods
-Donor optic nerve heads were collected and frozen less than 10 hours post mortem, and mechanically dissociated to isolate single nuclei. Droplet-based capture and library preparation was performed using the 10X Genomics V3.1 chemistry.
-Illumina sequencing was performed at the UC Irvine core Genomics facility, targetting 100M reads per sample.
-Raw sequences were first processed using CellRanger and subsequently loaded into Seurat for further analysis. The R package SoupX was applied to remove ambient RNA and clustered with a resolution of 0.4.
-To account for batch effects, the software package Harmony was used.
+Donor optic nerve heads were collected and frozen less than 10 hours post mortem, and mechanically dissociated to isolate single nuclei. Droplet-based capture and library preparation was performed using the 10X Genomics 3' v4  chemistry.
+Illumina sequencing was performed at the UC Irvine core Genomics facility, targetting 300M reads per sample.
+Raw sequences were first processed using **CellRanger** and subsequently loaded into **Seurat** for further analysis. The R package **SoupX** was applied to remove ambient RNA and clustered with a resolution of 0.4.
+To account for batch effects, the software package **Harmony** was also used.
 Clusters were analyzed for top 10 markers and this list was used to assign likely cell type identities to each cluster, based on manual verification.
-Astrocytes were further analyzed for DEGs and analyzed for pathway changes using the R package clusterProfiler.
+Astrocytes were further analyzed for DEGs and analyzed for pathway changes using the R package **clusterProfiler**.
 
 ## CellRanger
 CellRanger is the default software package, provided by 10X Genomics, for analyzing 10X single cell data.
@@ -53,6 +53,7 @@ VlnPlot(seu_merged,
         group.by = "Group", 
         pt.size = 0, 
         ncol = 3)
+<img width="661" height="557" alt="QCmetrics" src="https://github.com/user-attachments/assets/9620fef8-36a6-46c0-a011-7a2affc62ba5" />
 
 
 ## Create Seurat object
