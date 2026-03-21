@@ -387,7 +387,7 @@ GO terms upregulated in reactive astrocytes include Wnt signaling, actin filamen
 
 Astrocyte reactivity is itself a heterogeneous process, for which future analysis can address by subclustering all astrocyte populations and identifying pathway changes in each subcluster. Previous reports have identified C3 positive and proliferative astrocytes as critical influences of neuronal survival after injury or in disease (Cameron et al 2024), which we expect to see in this dataset as well. In addition, identification of new markers for different reactive subtypes may be useful for the understanding of reactive astrocyte biology as a whole.
 
-While the data obtained from donor tissues produces cell clusters and identifies associated changes in gene expression, the inherent nature of human sample variability, especially time before freezing, may influence the reliablity of conclusions in this study. More samples will be necessary (N = 6-8) in order to identify robust changes in these tissues and make confident conclusions about their biological changes.
+While the data obtained from donor tissues produces cell clusters and identifies associated changes in gene expression, the inherent nature of human sample variability, especially time before freezing, may influence the reliablity of conclusions in this study. More samples will be necessary (N = 6-8) in order to identify robust changes in these tissues and make confident conclusions about their biology.
 
 ## References
 
