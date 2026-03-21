@@ -1,12 +1,11 @@
 # EE282 Transcriptomic Analysis of Normal and Glaucomatous Human Optic Nerve Head tissue
+## Introduction
 Glaucoma is the leading cause of irreversible blindness worldwide, and is characterized by progressive vision loss due to pressure-mediated damage to retinal ganglion cell axons (Ehrlrich et al 2022), all of which pass through the optic nerve head before innervating visual targets in the brain.
-Both neuronal and glial cell populations in this region display profound, often heterogeneous changes in several models of glaucoma (Mazumder et al 2023, Cameron et al 2024)
-Therefore, the optic nerve head is an important region of cellular and molecular changes, although the transcriptomic changes in human glaucoma in the optic nerve head have never been identified at the single cell level.
-Here, we performed single cell transcriptomics and pathway analysis on optic nerve head tissues from normal and glaucomatous donor eyes. Two samples from normal donor eyes (referred to as "N3a" and "N4a") and two samples from glaucomatous donor eyes (referred to as "G1a" and "G2a") were considered for this analysis.
+Both neuronal and glial cell populations in this region display profound, often heterogeneous changes in several models of glaucoma (Mazumder et al 2023, Cameron et al 2024).
+Therefore, the optic nerve head is an important region of cellular and molecular changes, although the transcriptomic changes in human glaucoma in the optic nerve head have never been profiled using single cell/single nuclei RNA sequencing.
+Here, we performed single nuclei transcriptomics and pathway analysis on optic nerve head tissues from normal and glaucomatous donor eyes. Two samples from normal donor eyes (referred to as "N3a" and "N4a") and two samples from glaucomatous donor eyes (referred to as "G1a" and "G2a") were considered for this analysis.
 
 ## Methods
-<img width="1408" height="768" alt="analysis_workflow" src="https://github.com/user-attachments/assets/c1938225-6502-4990-b7c9-2c18d946898a" />
-
 Donor optic nerve heads were collected and frozen less than 10 hours post-mortem, and mechanically dissociated to isolate single nuclei. Droplet-based capture and library preparation was performed using the 10X Genomics 3' v4  chemistry.
 Illumina sequencing was performed at the UC Irvine core Genomics facility, targetting 300M reads per sample.
 Raw sequences were first processed using **CellRanger** and subsequently loaded into **Seurat** for further analysis. The R package **SoupX** was applied to remove ambient RNA and clustered with a resolution of 0.4.
@@ -376,8 +375,7 @@ go_reactive_down <- enrichGO(gene          = sig_down_reactive,
                            pAdjustMethod = "BH",
                            pvalueCutoff  = 0.05,
                            qvalueCutoff  = 0.05)
-dotplot(sig_down_reactive, showCategory = 10) + 
-  ggtitle("Downregulated Pathways: Glaucoma vs Normal Reactive Astrocytes")
+dotplot(sig_down_reactive, showCategory = 10) + ggtitle("Downregulated Pathways: Glaucoma vs Normal Reactive Astrocytes")
 ```
 <img width="727" height="557" alt="downregulated_reactive astrocytes" src="https://github.com/user-attachments/assets/f4ff4b29-3d5e-4729-8c88-c2b81d8dae39" />
 
@@ -387,7 +385,9 @@ GO terms upregulated in reactive astrocytes include Wnt signaling, actin filamen
 
 Astrocyte reactivity is itself a heterogeneous process, for which future analysis can address by subclustering all astrocyte populations and identifying pathway changes in each subcluster. Previous reports have identified C3 positive and proliferative astrocytes as critical influences of neuronal survival after injury or in disease (Cameron et al 2024), which we expect to see in this dataset as well. In addition, identification of new markers for different reactive subtypes may be useful for the understanding of reactive astrocyte biology as a whole.
 
-While the data obtained from donor tissues produces cell clusters and identifies associated changes in gene expression, the inherent nature of human sample variability, especially time before freezing, may influence the reliablity of conclusions in this study. More samples will be necessary (N = 6-8) in order to identify robust changes in these tissues and make confident conclusions about their biology.
+While the data obtained from donor tissues produces cell clusters and identifies associated changes in gene expression, the inherent nature of human sample variability, especially time before freezing, may influence the reliablity of conclusions in this study. Analysis of more samples will be necessary (N = 6-8) in order to identify robust changes in these tissues and motivate follow up mechanistic studies.
+
+Additionally, the set of molecular changes in other cell clusters of interest including oligodendrocytes and Muller glia may be explored in subsequent analyses.
 
 ## References
 
