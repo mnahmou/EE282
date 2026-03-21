@@ -392,12 +392,19 @@ While the data obtained from donor tissues produces cell clusters and identifies
 ## References
 
 Cameron EG, Nahmou M, Toth AB, Heo L, Tanasa B, Dalal R, Yan W, Nallagatla P, Xia X, Hay S, et al. 2024. A molecular switch for neuroprotective astrocyte reactivity. Nature 626: 574–582.
+
 Korsunsky I, Millard N, Fan J, Slowikowski K, Zhang F, Wei K, Baglaenko Y, Brenner M, Loh P, Raychaudhuri S. 2019. Fast, sensitive and accurate integration of single-cell data with Harmony. Nat Methods 16: 1289–1296.
+
 Mazumder AG, Julé AM, Sun D. 2023. Astrocytes of the optic nerve exhibit a region-specific and temporally distinct response to elevated intraocular pressure. Mol Neurodegener 18: 68.
+
 Satija R, Farrell JA, Gennert D, Schier AF, Regev A. 2015. Spatial reconstruction of single-cell gene expression data. Nat Biotechnol 33: 495–502.
+
 Tham Y-C, Li X, Wong TY, Quigley HA, Aung T, Cheng C-Y. 2014. Global prevalence of glaucoma and projections of glaucoma burden through 2040: a systematic review and meta-analysis. Ophthalmology 121: 2081–2090.
+
 Young MD, Behjati S. 2020. SoupX removes ambient RNA contamination from droplet-based single-cell RNA sequencing data. Gigascience 9: giaa151.
+
 Yu G, Wang L-G, Han Y, He Q-Y. 2012. clusterProfiler: an R Package for Comparing Biological Themes Among Gene Clusters. OMICS 16: 284–287.
+
 Zheng GXY, Terry JM, Belgrader P, Ryvkin P, Bent ZW, Wilson R, Ziraldo SB, Wheeler TD, McDermott GP, Zhu J, et al. 2017. Massively parallel digital transcriptional profiling of single cells. Nat Commun 8: 14049.
 
 
