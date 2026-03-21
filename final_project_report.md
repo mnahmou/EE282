@@ -5,6 +5,8 @@ Therefore, the optic nerve head is an important region of cellular and molecular
 Here, we performed single cell transcriptomics and pathway analysis on optic nerve head tissues from normal and glaucomatous donor eyes. Two samples from normal donor eyes (referred to as "N3a" and "N4a") and two samples from glaucomatous donor eyes (referred to as "G1a" and "G2a") were considered for this analysis.
 
 ## Methods
+<img width="1408" height="768" alt="analysis_workflow" src="https://github.com/user-attachments/assets/c1938225-6502-4990-b7c9-2c18d946898a" />
+
 Donor optic nerve heads were collected and frozen less than 10 hours post-mortem, and mechanically dissociated to isolate single nuclei. Droplet-based capture and library preparation was performed using the 10X Genomics 3' v4  chemistry.
 Illumina sequencing was performed at the UC Irvine core Genomics facility, targetting 300M reads per sample.
 Raw sequences were first processed using **CellRanger** and subsequently loaded into **Seurat** for further analysis. The R package **SoupX** was applied to remove ambient RNA and clustered with a resolution of 0.4.
