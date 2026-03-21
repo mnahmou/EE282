@@ -379,7 +379,7 @@ go_reactive_down <- enrichGO(gene          = sig_down_reactive,
 dotplot(sig_down_reactive, showCategory = 10) + 
   ggtitle("Downregulated Pathways: Glaucoma vs Normal Reactive Astrocytes")
 ```
-<img width="751" height="613" alt="reactive_astrocytes_downregulated" src="https://github.com/user-attachments/assets/e79bc019-b25b-40a7-90c4-698e598d52d2" />
+<img width="727" height="557" alt="downregulated_reactive astrocytes" src="https://github.com/user-attachments/assets/f4ff4b29-3d5e-4729-8c88-c2b81d8dae39" />
 
 ## Findings and discussion
 In comparison to control, glaucomatous astrocytes upregulate protein localization to organelles, Wnt signalling, and response to oxidative stress and downregulate RNA splicing, microtubule-based movement, and cilium assembly.
