@@ -14,7 +14,7 @@ Clusters were analyzed for top 10 markers and this list was used to assign likel
 Astrocytes were further analyzed for DEGs and analyzed for pathway changes using the R package **clusterProfiler**.
 
 ## Results
-## CellRanger
+### CellRanger
 CellRanger is the default software package, provided by 10X Genomics, for analyzing 10X single cell data (Zheng, et al 2017).
 It performs demultiplexing, read alignment, barcode and unique molecular identifier (UMI) processing, feature counting, and generation of a feature barcode matric to be fed into Seurat.
 FastQC was proposed in the analysis proposal but was not implemented here because it is not optimized for single cell/single nuclei data.
@@ -50,7 +50,7 @@ do
                      --localcores=4 \
                      --localmem=100
 ```
-### Plot QC metrics
+#### Plot QC metrics
 VlnPlot(seu_merged, 
         features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), 
         group.by = "Group", 
@@ -63,7 +63,7 @@ SoupX and Harmony will be run to account for the observed batch effects in the f
 
 Next, the Seurat package was used to cluster the cellranger feature barcode matrix, (Zheng, et al 2017), implementing SoupX (Young et al, 2020) to clean the data by removing ambient RNA content.
 
-## Create Seurat object
+### Create Seurat object
 seurat.sh
 ```
 #!/bin/bash
@@ -132,7 +132,8 @@ saveRDS(onh, paste0(sample_id, "_processed.rds"))
 message("SUCCESS: Analysis complete for ", sample_id)
 EOF
 ```
-## Harmony batch correction (Korsunsky et al 2019)
+### Harmony batch correction 
+Harmony "projects cells into a common embedding" to make samples more comparable (Korsunsky et al 2019).
 The following script for harmony.sh was run:
 
 ```
