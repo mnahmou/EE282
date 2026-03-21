@@ -1,11 +1,11 @@
 # EE282 Transcriptomic Analysis of Normal and Glaucomatous Human Optic Nerve Head tissue
-Glaucoma is the leading cause of irreversible blindness worldwide, and is characterized by progressive vision loss due to pressure-mediated damage to retinal ganglion cell axons, which all pass through the optic nerve head before innervating visual targets in the brain.
-Both neuronal and glial cell populations in this region display profound, often heterogeneous changes in several models of glaucoma.
-Therefore, the optic nerve head is an important region of cellular and molecular changes, although the transcriptomic changes in human glaucoma have never been identified at the single cell level.
-Here, we performed single cell transcriptomics on optic nerve head tissues from normal and glaucomatous donor eyes.
+Glaucoma is the leading cause of irreversible blindness worldwide, and is characterized by progressive vision loss due to pressure-mediated damage to retinal ganglion cell axons (Ehrlrich et al 2022), all of which pass through the optic nerve head before innervating visual targets in the brain.
+Both neuronal and glial cell populations in this region display profound, often heterogeneous changes in several models of glaucoma (Mazumder et al 2023, Cameron et al 2024)
+Therefore, the optic nerve head is an important region of cellular and molecular changes, although the transcriptomic changes in human glaucoma in the optic nerve head have never been identified at the single cell level.
+Here, we performed single cell transcriptomics and pathway analysis on optic nerve head tissues from normal and glaucomatous donor eyes. Two samples from normal donor eyes (referred to as "N3a" and "N4a") and two samples from glaucomatous donor eyes (referred to as "G1a" and "G2a") were considered for this analysis.
 
 ## Methods
-Donor optic nerve heads were collected and frozen less than 10 hours post mortem, and mechanically dissociated to isolate single nuclei. Droplet-based capture and library preparation was performed using the 10X Genomics 3' v4  chemistry.
+Donor optic nerve heads were collected and frozen less than 10 hours post-mortem, and mechanically dissociated to isolate single nuclei. Droplet-based capture and library preparation was performed using the 10X Genomics 3' v4  chemistry.
 Illumina sequencing was performed at the UC Irvine core Genomics facility, targetting 300M reads per sample.
 Raw sequences were first processed using **CellRanger** and subsequently loaded into **Seurat** for further analysis. The R package **SoupX** was applied to remove ambient RNA and clustered with a resolution of 0.4.
 To account for batch effects, the software package **Harmony** was also used.
@@ -13,8 +13,9 @@ Clusters were analyzed for top 10 markers and this list was used to assign likel
 Astrocytes were further analyzed for DEGs and analyzed for pathway changes using the R package **clusterProfiler**.
 
 ## CellRanger
-CellRanger is the default software package, provided by 10X Genomics, for analyzing 10X single cell data.
+CellRanger is the default software package, provided by 10X Genomics, for analyzing 10X single cell data (Zheng, et al 2017).
 It performs demultiplexing, read alignment, barcode and unique molecular identifier (UMI) processing, feature counting, and generation of a feature barcode matric to be fed into Seurat.
+FastQC was proposed in the analysis proposal but was not implemented here because it is not optimized for single cell/single nuclei data.
 
 cellranger.sh script:
 
@@ -55,6 +56,10 @@ VlnPlot(seu_merged,
         ncol = 3)
 <img width="661" height="557" alt="QCmetrics" src="https://github.com/user-attachments/assets/9620fef8-36a6-46c0-a011-7a2affc62ba5" />
 
+The CellRanger output websummary identified quality issues with both normal samples: "Low fraction reads in cells. Ideal > 70%. Application performance may be affected. Many of the reads were not assigned to cell-associated barcodes. This could be caused by high levels of ambient RNA or by a significant population of cells with a low RNA content..."
+SoupX and Harmony will be run to account for the observed batch effects in the following analysis using Seurat in R.
+
+Next, the Seurat package was used to cluster the cellranger feature barcode matrix, (Zheng, et al 2017), implementing SoupX (Young et al, 2020) to clean the data by removing ambient RNA content.
 
 ## Create Seurat object
 seurat.sh
@@ -124,10 +129,11 @@ onh <- RunUMAP(onh, dims = 1:20)
 saveRDS(onh, paste0(sample_id, "_processed.rds"))
 message("SUCCESS: Analysis complete for ", sample_id)
 EOF
+```
+## Harmony batch correction (Korsunsky et al 2019)
+The following script for harmony.sh was run:
 
-## Harmony batch correction
-# harmony.sh
-
+```
 #!/bin/bash
 #SBATCH --job-name=harmony
 #SBATCH --nodes=1
@@ -189,7 +195,7 @@ echo "Harmony processing done."
 ```
 
 ## Cluster cell type annotation
-The following R code was applied to the integrated and batch-corrected Seurat object.
+The following R code was applied to the integrated and batch-corrected Seurat object, using the package clusterProfiler which references the Gene Ontology (GO) database of pathway definitions (Yu et al 2012).
 
 ```
 #Find defining markers and list the top 10 unique markers with highest Log2FC.
@@ -241,6 +247,7 @@ DimPlot(seu_merged, reduction = "umap", label = TRUE, repel = TRUE, label.size =
 <img width="2000" height="750" alt="top10_dotplot" src="https://github.com/user-attachments/assets/62afc2eb-1b35-4784-91e4-3f45c8ead109" />
 <img width="1025" height="613" alt="Rplot" src="https://github.com/user-attachments/assets/b382a66b-add7-4767-8204-1c1741a1aec6" />
 
+Astrocytes are abundant cells in this tissue and are particularly interesting across models of neurodegenerative disease because of their contributions to maintaining neuronal physiology as well as their dynamic responses to various injury cues in their conversion to reactive states. Therefore, astrocyte clusters presented here "Astrocytes" and "Reactive Astrocytes" were the focus of differentially expressed genes (DEG) and pathway analysis performed. 
 
 ## DEGs in astrocytes
 ```
@@ -372,8 +379,24 @@ dotplot(sig_down_reactive, showCategory = 10) +
 ```
 <img width="751" height="613" alt="reactive_astrocytes_downregulated" src="https://github.com/user-attachments/assets/e79bc019-b25b-40a7-90c4-698e598d52d2" />
 
+## Findings and discussion
+In comparison to control, glaucomatous astrocytes upregulate protein localization to organelles, Wnt signalling, and response to oxidative stress and downregulate RNA splicing, microtubule-based movement, and cilium assembly.
+GO terms upregulated in reactive astrocytes include Wnt signaling, actin filament organization, and macroautophagy, while downregulated pathways include RNA splicing and protein transport.
 
+Astrocyte reactivity is itself a heterogeneous process, for which future analysis can address by subclustering all astrocyte populations and identifying pathway changes in each subcluster. Previous reports have identified C3 positive and proliferative astrocytes as critical influences of neuronal survival after injury or in disease (Cameron et al 2024), which we expect to see in this dataset as well. In addition, identification of new markers for different reactive subtypes may be useful for the understanding of reactive astrocyte biology as a whole.
 
+While the data obtained from donor tissues produces cell clusters and identifies associated changes in gene expression, the inherent nature of human sample variability, especially time before freezing, may influence the reliablity of conclusions in this study. More samples will be necessary (N = 6-8) in order to identify robust changes in these tissues and make confident conclusions about their biological changes.
+
+## References
+
+Cameron EG, Nahmou M, Toth AB, Heo L, Tanasa B, Dalal R, Yan W, Nallagatla P, Xia X, Hay S, et al. 2024. A molecular switch for neuroprotective astrocyte reactivity. Nature 626: 574–582.
+Korsunsky I, Millard N, Fan J, Slowikowski K, Zhang F, Wei K, Baglaenko Y, Brenner M, Loh P, Raychaudhuri S. 2019. Fast, sensitive and accurate integration of single-cell data with Harmony. Nat Methods 16: 1289–1296.
+Mazumder AG, Julé AM, Sun D. 2023. Astrocytes of the optic nerve exhibit a region-specific and temporally distinct response to elevated intraocular pressure. Mol Neurodegener 18: 68.
+Satija R, Farrell JA, Gennert D, Schier AF, Regev A. 2015. Spatial reconstruction of single-cell gene expression data. Nat Biotechnol 33: 495–502.
+Tham Y-C, Li X, Wong TY, Quigley HA, Aung T, Cheng C-Y. 2014. Global prevalence of glaucoma and projections of glaucoma burden through 2040: a systematic review and meta-analysis. Ophthalmology 121: 2081–2090.
+Young MD, Behjati S. 2020. SoupX removes ambient RNA contamination from droplet-based single-cell RNA sequencing data. Gigascience 9: giaa151.
+Yu G, Wang L-G, Han Y, He Q-Y. 2012. clusterProfiler: an R Package for Comparing Biological Themes Among Gene Clusters. OMICS 16: 284–287.
+Zheng GXY, Terry JM, Belgrader P, Ryvkin P, Bent ZW, Wilson R, Ziraldo SB, Wheeler TD, McDermott GP, Zhu J, et al. 2017. Massively parallel digital transcriptional profiling of single cells. Nat Commun 8: 14049.
 
 
 
