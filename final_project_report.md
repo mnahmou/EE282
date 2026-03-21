@@ -13,6 +13,7 @@ To account for batch effects, the software package **Harmony** was also used.
 Clusters were analyzed for top 10 markers and this list was used to assign likely cell type identities to each cluster, based on manual verification.
 Astrocytes were further analyzed for DEGs and analyzed for pathway changes using the R package **clusterProfiler**.
 
+## Results
 ## CellRanger
 CellRanger is the default software package, provided by 10X Genomics, for analyzing 10X single cell data (Zheng, et al 2017).
 It performs demultiplexing, read alignment, barcode and unique molecular identifier (UMI) processing, feature counting, and generation of a feature barcode matric to be fed into Seurat.
